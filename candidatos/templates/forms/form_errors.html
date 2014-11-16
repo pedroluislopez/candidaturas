@@ -1,0 +1,12 @@
+{% if login_form.non_field_errors %}
+<div class="form-group">
+	<label class="col-sm-2 control-label">&nbsp;</label>
+	<div class="col-xs-4">
+	    <div class="alert alert-danger" role="alert">
+	  		<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+	  		<span class="sr-only">Error:</span>
+	  		{% for error in form.non_field_errors %}<strong>{{ error|escape }}<br/></strong>{% endfor %}
+		</div>
+	</div>
+</div>
+{% endif %}

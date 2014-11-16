@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %} - Entrar{% endblock %}
+
+{% block login_class %}active{% endblock %}
+
+{% block content %}
+<h1>Entrar</h1>
+<hr/>
+<form action="{% url "login" %}" method="post" class="form-horizontal">
+    {% csrf_token %}
+    
+    {% include "forms/form_errors.html" with form=login_form %}
+    {% include "forms/form_field.html" with field=login_form.username %}
+    {% include "forms/form_field.html" with field=login_form.password %}
+    
+	<div class="form-group">
+    	<div class="col-sm-offset-2 col-sm-10">
+			<input type="submit" value="Entrar" class="btn btn-primary" />
+		</div>
+	</div>
+</form>
+
+<div class="">
+	<a href="{% url "reset_password" %}">Recuperar la contrase&ntilde;a</a>
+</div>
+{% endblock %}

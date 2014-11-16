@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %} - Usuario{% endblock %}
+
+{% block user_class %}active{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">{{ user.username }}
+            <small>{{ user.email }}</small>
+        </h1>
+    </div>
+</div>
+<form action="{% url "user" %}" method="post" class="form-horizontal">
+    {% csrf_token %}
+    
+    {% include "forms/form_errors.html" with form=password_form %}
+    {% include "forms/form_ok.html" with condition=success message='Password cambiada con éxito' %}
+    {% include "forms/form_field.html" with field=password_form.password %}
+    {% include "forms/form_field.html" with field=password_form.password2 %}
+    
+	<div class="form-group">
+    	<div class="col-sm-offset-2 col-sm-10">
+			<input type="submit" value="Aceptar" class="btn btn-primary" />
+		</div>
+	</div>
+</form>
+{% endblock %}

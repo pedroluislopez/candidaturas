@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %} - Candidatura{% endblock %}
+
+{% block candidatura_class %}active{% endblock %}
+
+{% block content %}
+<h1>Candidatura</h1>
+<hr/>
+<form action="{% url "candidatura" %}" method="post" class="form-horizontal" enctype="multipart/form-data">
+    {% csrf_token %}
+    
+    {% include "forms/form_errors.html" with form=candidato_form %}
+    {% include "forms/form_ok.html" with condition=success message='Candidatura presentada con éxito' %}
+    {% include "forms/form_warning.html" with condition=deleted message='Candidatura borrada con éxito' %}
+    {% include "forms/form_field.html" with field=candidato_form.candidatura %}
+    {% include "forms/form_field.html" with field=candidato_form.nombre %}
+    {% include "forms/form_field.html" with field=candidato_form.apellidos %}
+    {% include "forms/form_field.html" with field=candidato_form.nif %}
+    {% include "forms/form_field.html" with field=candidato_form.telefono %}
+    {% include "forms/form_field.html" with field=candidato_form.imagen %}
+    {% include "forms/form_field.html" with field=candidato_form.secretario %}
+    {% include "forms/form_field.html" with field=candidato_form.consejo %}
+    {% include "forms/form_field.html" with field=candidato_form.biografia %}
+    {% include "forms/form_field.html" with field=candidato_form.motivacion %}
+    {% include "forms/form_field.html" with field=candidato_form.youtube %}
+    
+	<div class="form-group">
+    	<div class="col-sm-offset-2 col-sm-10">
+			<input type="submit" value="Guardar" class="btn btn-primary" />
+			<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal">Borrar</button>
+		</div>
+	</div>
+	
+	<!-- Modal -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	    <div class="modal-dialog">
+	      <div class="modal-content">
+	        <div class="modal-header">
+	          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+	          <h4 class="modal-title" id="myModalLabel">&iquest;Est&aacute;s seguro de querer borrar la candidatura?</h4>
+	        </div>
+	        <div class="modal-footer">
+	          <button type="button" class="btn btn-default" data-dismiss="modal">Volver</button>
+	          <a class="btn btn-danger" href="{% url "borrar_candidatura" %}">Borrar</a>
+	        </div>
+	      </div>
+	    </div>
+	</div>
+</form>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %} - {{ c.user.first_name }} {{ c.user.last_name }}{% endblock %}
+
+{% block content %}
+<div class="featurette" id="about">
+    <img class="featurette-image img-circle img-responsive pull-right" src="{{ c.get_imagen }}">
+    <h1 class="page-header">{{ c.user.first_name }} {{ c.user.last_name }}
+        <small>{{ c.get_candidatura }}</small>
+    </h1>
+    <h3>Biograf&iacute;a</h3>
+    <p>{{ c.biografia }}</p>
+    <p>&nbsp;</p>
+    <h3>Motivaci&oacute;n</h3>
+    <p>{{ c.motivacion }}</p>
+    {% if c.youtube %}
+    <p>&nbsp;</p>
+    <h3>V&iacute;deo</h3>
+    <p><iframe width="480" height="360" src="{{ c.get_youtube_src }}" frameborder="0" allowfullscreen></iframe></p>
+    {% endif %}
+    <p>&nbsp;</p>
+</div>
+{% endblock %}

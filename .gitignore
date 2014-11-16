@@ -52,3 +52,7 @@ docs/_build/
 
 # PyBuilder
 target/
+
+# django local settings and media
+media/
+candidaturas/local_settings.py

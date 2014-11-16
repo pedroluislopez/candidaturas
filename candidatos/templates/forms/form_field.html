@@ -1,0 +1,14 @@
+<div class="form-group{% if field.errors %} has-error has-feedback{% endif %}">
+    <label for="id_{{ field.name }}" class="col-sm-2 control-label{% if field.field.required %} required{% endif %}">{{ field.label|escape }}</label>
+    <div class="col-xs-5">
+    	{{ field }}
+    	{% if field.errors %}
+    	<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+  		<span id="inputError2Status" class="sr-only">(error)</span>
+  		<span class="help-block">
+  			{% for error in field.errors %}<strong>{{ error|escape }}<br/></strong>{% endfor %}
+  		</span>
+  		{% endif %}
+  		<span class="help-block">{{ field.field.help_text }}</span>
+    </div>
+</div>
