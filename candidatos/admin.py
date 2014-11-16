@@ -1,8 +1,16 @@
 from django.contrib import admin
-from candidatos.models import Candidato
+from django.contrib.auth.admin import UserAdmin
 from django.utils.translation import ugettext as _
 
+from candidatos.models import Candidato, User
+
+
 # Register your models here.
+class UserAdmin(UserAdmin):
+    pass
+
+admin.site.register(User, UserAdmin)
+
 class CandidatoAdmin(admin.ModelAdmin):
     fieldsets = [
         (None, {'fields': ['user', 'imagen']}),

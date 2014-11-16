@@ -1,7 +1,12 @@
 # -*- encoding: utf-8 -*-
 
+from django.contrib.auth.models import AbstractUser
 from django.db import models
-from django.contrib.auth.models import User
+from simple_email_confirmation.models import SimpleEmailConfirmationUserMixin
+
+
+class User(SimpleEmailConfirmationUserMixin, AbstractUser):
+    pass
 
 # Create your models here.
 class Candidato(models.Model):

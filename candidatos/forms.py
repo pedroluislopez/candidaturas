@@ -1,9 +1,8 @@
 # -*- encoding: utf-8 -*-
 
 from django import forms
-from django.contrib.auth.models import User
 
-from candidatos.models import Candidato
+from candidatos.models import Candidato, User
 
 class LoginForm(forms.Form):
     username = forms.CharField(label='Usuario', widget=forms.TextInput({'class': 'form-control'}))

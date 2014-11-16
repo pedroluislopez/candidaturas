@@ -3,12 +3,12 @@
 from django.conf import settings
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
 from django.core.mail import send_mail
 from django.shortcuts import render, redirect, get_object_or_404
 
 from candidatos.forms import UserForm, LoginForm, ResetPasswordForm, PasswordForm, CandidatoForm
-from candidatos.models import Candidato
+from candidatos.models import Candidato, User
+from simple_email_confirmation.models import EmailAddress
 
 
 # Create your views here.
@@ -32,11 +32,14 @@ def user_login(request):
             user = authenticate(username=username, password=password)
     
             if user:
-                if user.is_active:
-                    login(request, user)
-                    return redirect('index')
+                if user.is_confirmed:
+                    if user.is_active:
+                        login(request, user)
+                        return redirect('index')
+                    else:
+                        login_form.add_error(None, "Tu cuenta está desactivada.")
                 else:
-                    login_form.add_error(None, "Tu cuenta está desactivada.")
+                    login_form.add_error(None, "Tu cuenta no está confirmada.")
             else:
                 login_form.add_error(None, "Usuario o contraseña inválidos")
     else:
@@ -59,12 +62,21 @@ def register(request):
             user = user_form.save()
             user.set_password(user.password)
             user.save()
+            send_mail('[Candidaturas Podemos Murcia]: Confirmar registro',
+                      u'Acceda al siguiente enlace para confirmar su cuenta: %s.' %\
+                        request.build_absolute_uri(user.confirmation_key).replace('register', 'confirm'),
+                      settings.EMAIL_HOST_USER, [user.email], fail_silently=False)
             registered = True
             user_form = UserForm()
     else:
         user_form = UserForm()
     
     return render(request, 'register.html', {'user_form': user_form, 'registered': registered})
+
+def confirm(request, key):
+    email_address = get_object_or_404(EmailAddress, key=key)
+    email_address.user.confirm_email(key)
+    return render(request, 'confirm.html')
 
 def reset_password(request):
     sent = False

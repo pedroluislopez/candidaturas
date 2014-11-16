@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block title %} - Confirmar cuenta{% endblock %}
+
+{% block register_class %}active{% endblock %}
+
+{% block content %}
+<h1>Registrarse</h1>
+<hr/>
+{% include "forms/form_ok.html" with condition=True message='Usuario confirmado' %}
+{% endblock %}
