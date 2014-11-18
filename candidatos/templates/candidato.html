@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% block title %} - {{ c.user.first_name }} {{ c.user.last_name }}{% endblock %}
+{% block description %}{{ c.motivacion|escape }}{% endblock %}
 
 {% block content %}
 <div class="featurette" id="about">
