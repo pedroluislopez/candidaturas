@@ -5,6 +5,7 @@
 {% block content %}
 <div class="featurette" id="about">
     <img class="featurette-image img-circle img-responsive pull-right" src="{{ c.get_imagen }}">
+    <link rel="image_src" href="{{ c.get_imagen }}">
     <h1 class="page-header">{{ c.user.first_name }} {{ c.user.last_name }}
         <small>{{ c.get_candidatura }}</small>
     </h1>
