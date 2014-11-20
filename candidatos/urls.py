@@ -13,5 +13,5 @@ urlpatterns = patterns('',
     url(r'^user/$', views.user, name='user'),
     url(r'^candidatura/$', views.candidatura, name='candidatura'),
     url(r'^borrar_candidatura/$', views.borrar_candidatura, name='borrar_candidatura'),
-    url(r'^candidato/(?P<candidato_id>\d+)/$', views.candidato, name='candidato'),
+    url(r'^candidato/(?P<username>[\w.@+-]+)/$', views.candidato, name='candidato'),
 )

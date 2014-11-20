@@ -172,6 +172,6 @@ def borrar_candidatura(request):
         instance=Candidato())
     return render(request, 'candidatura.html', {'candidato_form': candidato_form, 'success': False, 'deleted': True})
 
-def candidato(request, candidato_id):
-    candidato = get_object_or_404(Candidato, pk=candidato_id)
+def candidato(request, username):
+    candidato = get_object_or_404(Candidato, user__username=username)
     return render(request, 'candidato.html', {'c': candidato})
