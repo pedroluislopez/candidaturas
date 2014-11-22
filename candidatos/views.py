@@ -16,10 +16,10 @@ def index(request):
     import random
     candidatos_sg = Candidato.objects.filter(secretario=True)
     if len(candidatos_sg):
-        random.choice(candidatos_sg)
+        random.shuffle(candidatos_sg)
     candidatos_cc = Candidato.objects.filter(consejo=True)
     if len(candidatos_cc):
-        random.choice(candidatos_cc)
+        random.shuffle(candidatos_cc)
     return render(request, 'index.html', {'candidatos_sg': candidatos_sg, 'candidatos_cc': candidatos_cc})
     
 def user_login(request):
@@ -62,7 +62,7 @@ def register(request):
             user = user_form.save()
             user.set_password(user.password)
             user.save()
-            send_mail('[Candidaturas Podemos Murcia]: Confirmar registro',
+            send_mail('[Candidaturas Ahora Podemos Murcia]: Confirmar registro',
                       u'Acceda al siguiente enlace para confirmar su cuenta: %s.' %\
                         request.build_absolute_uri(user.confirmation_key).replace('register', 'confirm'),
                       settings.EMAIL_HOST_USER, [user.email], fail_silently=False)
@@ -90,7 +90,7 @@ def reset_password(request):
             user = User.objects.filter(email=email)[0]
             user.set_password(new_password)
             user.save()
-            send_mail('[Candidaturas Podemos Murcia]: Recuperar contraseña',
+            send_mail('[Candidaturas Ahora Podemos Murcia]: Recuperar contraseña',
                       u'Su nueva contraseña para el usuario "' + user.username + '" es: "' + new_password + '".',
                       settings.EMAIL_HOST_USER, [email], fail_silently=False)
             sent = True
@@ -141,21 +141,21 @@ def candidatura(request):
             
             instance = candidato_form.save(commit=False)
             candidatura = candidato_form.cleaned_data['candidatura']
-            if candidatura == '1':
+            instance.secretario = False
+            instance.consejo = False
+            if '1' in candidatura:
                 instance.secretario = True
-                instance.consejo = False
-            else:
-                instance.secretario = False
+            if '2' in candidatura:
                 instance.consejo = True
             instance.user = request.user
             instance.save()
             success = True
     else:
-        candidatura = '0'
+        candidatura = []
         if instance.secretario:
-            candidatura = '1'
-        elif instance.consejo:
-            candidatura = '2'
+            candidatura.append('1')
+        if instance.consejo:
+            candidatura.append('2')
         candidato_form = CandidatoForm(
             initial={'nombre': request.user.first_name, 'apellidos': request.user.last_name, 'candidatura': candidatura},
             instance=instance)

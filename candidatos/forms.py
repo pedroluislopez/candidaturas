@@ -61,8 +61,8 @@ class PasswordForm(forms.Form):
     
 class CandidatoForm(forms.ModelForm):
     id = forms.HiddenInput
-    CHOICES = (('0', 'Selecione un tipo de candidatura ...'), ('1', 'Secretario General',), ('2', 'Consejo ciudadano',))
-    candidatura = forms.ChoiceField(label='Candidatura', choices=CHOICES, widget=forms.Select({'class': 'form-control'}))
+    CHOICES = (('1', 'Secretario General',), ('2', 'Consejo ciudadano',))
+    candidatura = forms.MultipleChoiceField(required=True, widget=forms.SelectMultiple({'class': 'form-control'}), choices=CHOICES)
     nombre = forms.CharField(label='Nombre', widget=forms.TextInput({'class': 'form-control'}))
     apellidos = forms.CharField(label='Apellidos', widget=forms.TextInput({'class': 'form-control'}))
     nif = forms.CharField(label='NIF', widget=forms.TextInput({'class': 'form-control'}))
@@ -75,10 +75,4 @@ class CandidatoForm(forms.ModelForm):
     class Meta:
         model = Candidato
         fields = ('id', 'candidatura', 'nombre', 'apellidos', 'nif', 'telefono', 'imagen', 'biografia', 'motivacion', 'youtube')
-    
-    def clean_candidatura(self):
-        candidatura = self.cleaned_data.get('candidatura')
-        if candidatura == '0':
-            raise forms.ValidationError(" Este campo es obligatorio.")
-        return candidatura
     

@@ -31,7 +31,9 @@ class Candidato(models.Model):
         return self.imagen.url
     
     def get_candidatura(self):
-        if self.secretario:
+        if self.secretario and self.consejo:
+            return 'Secretaría general y Consejo ciudadano'
+        elif self.secretario:
             return 'Secretaría general'
         elif self.consejo:
             return 'Consejo ciudadano'
