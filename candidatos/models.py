@@ -47,3 +47,7 @@ class Candidato(models.Model):
                 .replace('https:', '')\
                 .replace('watch?v=', 'embed/')
         return ''
+    
+    def get_resumen(self):
+        return (self.motivacion[:255] + ' ...') if len(self.motivacion) > 255 else self.motivacion
+    

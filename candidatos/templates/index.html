@@ -19,7 +19,7 @@
     <div class="col-lg-4 col-sm-6 text-center">
         <img class="img-circle img-responsive img-center" src="{{ c.get_imagen }}" alt="">
         <h3><a href="{% url "candidato" c.user.username %}">{{ c.user.first_name }} {{ c.user.last_name }}</a></h3>
-        <p>{{ c.motivacion }}</p>
+        <p>{{ c.get_resumen }}</p>
     </div>
     {% empty %}
     <div class="col-lg-4 col-sm-6 text-center">
@@ -36,7 +36,7 @@
     <div class="col-lg-4 col-sm-6 text-center">
         <img class="img-circle img-responsive img-center" src="{{ c.get_imagen }}" alt="">
         <h3><a href="{% url "candidato" c.user.username %}">{{ c.user.first_name }} {{ c.user.last_name }}</a></h3>
-        <p>{{ c.motivacion }}</p>
+        <p>{{ c.get_resumen }}</p>
     </div>
     {% empty %}
     <div class="col-lg-4 col-sm-6 text-center">
