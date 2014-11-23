@@ -49,5 +49,5 @@ class Candidato(models.Model):
         return ''
     
     def get_resumen(self):
-        return (self.motivacion[:255] + ' ...') if len(self.motivacion) > 255 else self.motivacion
+        return (self.motivacion[:500] + ' ...') if len(self.motivacion) > 500 else self.motivacion
     
