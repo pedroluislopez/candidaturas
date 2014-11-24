@@ -176,3 +176,6 @@ def borrar_candidatura(request):
 def candidato(request, username):
     candidato = get_object_or_404(Candidato, user__username=username)
     return render(request, 'candidato.html', {'c': candidato})
+
+def about(request):
+    return render(request, 'about.html', {})

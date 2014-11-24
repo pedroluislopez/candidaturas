@@ -46,6 +46,9 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav pull-right">
+                    <li class="{% block about_class %}{% endblock %}">
+                        <a href="{% url "about" %}">Sobre nosotrxs</a>
+                    </li>
                 	{% if user.is_authenticated %}
                 	<li class="{% block user_class %}{% endblock %}">
                 	    <a href="{% url "user" %}">{{ user.email }}</a>
