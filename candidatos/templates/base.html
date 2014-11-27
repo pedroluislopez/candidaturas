@@ -49,24 +49,6 @@
                     <li class="{% block about_class %}{% endblock %}">
                         <a href="{% url "about" %}">Sobre nosotrxs</a>
                     </li>
-                	{% if user.is_authenticated %}
-                	<li class="{% block user_class %}{% endblock %}">
-                	    <a href="{% url "user" %}">{{ user.email }}</a>
-                	</li>
-                	<li class="{% block candidatura_class %}{% endblock %}">
-                	    <a href="{% url "candidatura" %}">Candidatura</a>
-                	</li>
-                	<li>
-                        <a href="{% url "logout" %}">Salir</a>
-                    </li>
-                	{% else %}
-                	<li class="{% block login_class %}{% endblock %}">
-                        <a href="{% url "login" %}">Entrar</a>
-                    </li>
-                    <li class="{% block register_class %}{% endblock %}">
-                        <a href="{% url "register" %}">Registrarse</a>
-                    </li>
-                	{% endif %}
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
