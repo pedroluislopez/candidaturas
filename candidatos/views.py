@@ -13,10 +13,10 @@ from candidatos.models import Candidato
 def index(request):
     import random
     r = random.Random()
-    candidatos_sg = Candidato.objects.filter(secretario=True)
+    candidatos_sg = Candidato.objects.filter(secretario=True, activo=True)
     if len(candidatos_sg) > 1:
         candidatos_sg = sorted(candidatos_sg, key=lambda L: r.random())
-    candidatos_cc = Candidato.objects.filter(consejo=True)
+    candidatos_cc = Candidato.objects.filter(consejo=True, activo=True)
     if len(candidatos_cc) > 1:
         candidatos_cc = sorted(candidatos_cc, key=lambda L: r.random())
     return render(request, 'index.html', {'candidatos_sg': candidatos_sg, 'candidatos_cc': candidatos_cc})
