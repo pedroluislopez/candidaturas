@@ -6,10 +6,8 @@ from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
 from django.shortcuts import render, redirect, get_object_or_404
 
-from candidatos.forms import UserForm, LoginForm, ResetPasswordForm, PasswordForm, CandidatoForm
-from candidatos.models import Candidato, User
-from simple_email_confirmation.models import EmailAddress
-
+from candidatos.forms import PasswordForm, CandidatoForm
+from candidatos.models import Candidato
 
 # Create your views here.
 def index(request):
@@ -23,83 +21,81 @@ def index(request):
         candidatos_cc = sorted(candidatos_cc, key=lambda L: r.random())
     return render(request, 'index.html', {'candidatos_sg': candidatos_sg, 'candidatos_cc': candidatos_cc})
     
-def user_login(request):
-    if request.method == 'POST':
-        login_form = LoginForm(data=request.POST)
+#def user_login(request):
+#    if request.method == 'POST':
+#        login_form = LoginForm(data=request.POST)
         
-        if login_form.is_valid():
-            username = login_form.cleaned_data['username']
-            password = login_form.cleaned_data['password']
-            user = authenticate(username=username, password=password)
+#        if login_form.is_valid():
+#            username = login_form.cleaned_data['username']
+#            password = login_form.cleaned_data['password']
+#            user = authenticate(username=username, password=password)
     
-            if user:
-                if user.is_confirmed:
-                    if user.is_active:
-                        login(request, user)
-                        return redirect('index')
-                    else:
-                        login_form.add_error(None, "Tu cuenta está desactivada.")
-                else:
-                    login_form.add_error(None, "Tu cuenta no está confirmada.")
-            else:
-                login_form.add_error(None, "Usuario o contraseña inválidos")
-    else:
-        login_form = LoginForm()
-    
-    return render(request, 'login.html', {'login_form': login_form})
+#            if user:
+#                if user.is_confirmed:
+#                    if user.is_active:
+#                        login(request, user)
+#                        return redirect('index')
+#                    else:
+#                        login_form.add_error(None, "Tu cuenta está desactivada.")
+#                else:
+#                    login_form.add_error(None, "Tu cuenta no está confirmada.")
+#            else:
+#                login_form.add_error(None, "Usuario o contraseña inválidos")
+#    else:
+#        login_form = LoginForm()
+#    
+#    return render(request, 'login.html', {'login_form': login_form})
 
 @login_required
 def user_logout(request):
     logout(request)
     return redirect('index')
 
-def register(request):
-    registered = False
-
-    if request.method == 'POST':
-        user_form = UserForm(data=request.POST)
-
-        if user_form.is_valid():
-            user = user_form.save()
-            user.set_password(user.password)
-            user.save()
-            send_mail('[Candidaturas Ahora Podemos Murcia]: Confirmar registro',
-                      u'Acceda al siguiente enlace para confirmar su cuenta: %s.' %\
-                        request.build_absolute_uri(user.confirmation_key).replace('register', 'confirm'),
-                      settings.EMAIL_HOST_USER, [user.email], fail_silently=False)
-            registered = True
-            user_form = UserForm()
-    else:
-        user_form = UserForm()
-    
-    return render(request, 'register.html', {'user_form': user_form, 'registered': registered})
+#def register(request):
+#    registered = False
+#
+#    if request.method == 'POST':
+#        user_form = UserForm(data=request.POST)
+#
+#        if user_form.is_valid():
+#            user = user_form.save()
+#            user.set_password(user.password)
+#            user.save()
+#            send_mail('[Candidaturas Ahora Podemos Murcia]: Confirmar registro',
+#                      u'Acceda al siguiente enlace para confirmar su cuenta: %s.' %\
+#                        request.build_absolute_uri(user.confirmation_key).replace('register', 'confirm'),
+#                      settings.EMAIL_HOST_USER, [user.email], fail_silently=False)
+#            registered = True
+#            user_form = UserForm()
+#    else:
+#        user_form = UserForm()
+#    
+#    return render(request, 'register.html', {'user_form': user_form, 'registered': registered})
 
 def confirm(request, key):
-    email_address = get_object_or_404(EmailAddress, key=key)
-    email_address.user.confirm_email(key)
     return render(request, 'confirm.html')
 
-def reset_password(request):
-    sent = False
-    
-    if request.method == 'POST':
-        reset_password_form = ResetPasswordForm(data=request.POST)
+#def reset_password(request):
+#    sent = False
+#    
+#    if request.method == 'POST':
+#        reset_password_form = ResetPasswordForm(data=request.POST)
 
-        if reset_password_form.is_valid():
-            email = reset_password_form.cleaned_data['email']
-            new_password = User.objects.make_random_password(length=15)
-            user = User.objects.filter(email=email)[0]
-            user.set_password(new_password)
-            user.save()
-            send_mail('[Candidaturas Ahora Podemos Murcia]: Recuperar contraseña',
-                      u'Su nueva contraseña para el usuario "' + user.username + '" es: "' + new_password + '".',
-                      settings.EMAIL_HOST_USER, [email], fail_silently=False)
-            sent = True
-            reset_password_form = ResetPasswordForm()
-    else:
-        reset_password_form = ResetPasswordForm()
+#        if reset_password_form.is_valid():
+#            email = reset_password_form.cleaned_data['email']
+#            new_password = User.objects.make_random_password(length=15)
+#            user = User.objects.filter(email=email)[0]
+#            user.set_password(new_password)
+#            user.save()
+#            send_mail('[Candidaturas Ahora Podemos Murcia]: Recuperar contraseña',
+#                      u'Su nueva contraseña para el usuario "' + user.username + '" es: "' + new_password + '".',
+#                      settings.EMAIL_HOST_USER, [email], fail_silently=False)
+#            sent = True
+#            reset_password_form = ResetPasswordForm()
+#    else:
+#        reset_password_form = ResetPasswordForm()
     
-    return render(request, 'reset_password.html', {'reset_password_form': reset_password_form, 'sent': sent})
+#    return render(request, 'reset_password.html', {'reset_password_form': reset_password_form, 'sent': sent})
 
 @login_required
 def user(request):
@@ -173,8 +169,8 @@ def borrar_candidatura(request):
         instance=Candidato())
     return render(request, 'candidatura.html', {'candidato_form': candidato_form, 'success': False, 'deleted': True})
 
-def candidato(request, username):
-    candidato = get_object_or_404(Candidato, user__username=username)
+def candidato(request, id):
+    candidato = get_object_or_404(Candidato, id=id)
     return render(request, 'candidato.html', {'c': candidato})
 
 def about(request):

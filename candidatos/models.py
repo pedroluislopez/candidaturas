@@ -1,18 +1,12 @@
 # -*- encoding: utf-8 -*-
 
-from django.contrib.auth.models import AbstractUser
 from django.db import models
-from simple_email_confirmation.models import SimpleEmailConfirmationUserMixin
-
-
-class User(SimpleEmailConfirmationUserMixin, AbstractUser):
-    pass
 
 # Create your models here.
 class Candidato(models.Model):
-    # This line is required. Links UserProfile to a User model instance.
-    user = models.OneToOneField(User)
-    
+    nombre = models.CharField('Nombre', max_length=50)
+    apellidos = models.CharField('Apellidos', max_length=50)
+    email = models.CharField('Email', max_length=50, unique=True)
     nif = models.CharField('NIF', max_length=9, unique=True)
     telefono = models.CharField('Teléfono', max_length=9)
     imagen = models.ImageField('Imagen', upload_to='profile_images', blank=True)
@@ -21,9 +15,10 @@ class Candidato(models.Model):
     biografia = models.TextField('Biografía', max_length=2000, blank=True)
     motivacion = models.TextField('Motivación', max_length=2000, blank=True)
     youtube = models.CharField('Vídeo youtube', max_length=50, blank=True)
+    activo = models.BooleanField('Activo', default=True)
     
     def __unicode__(self):
-        return self.user.username
+        return self.email
     
     def get_imagen(self):
         if not self.imagen:
