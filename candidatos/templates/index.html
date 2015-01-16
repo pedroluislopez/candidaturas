@@ -24,13 +24,13 @@
         <h3><a href="{% url "candidato" c.id %}">{{ c.nombre }} {{ c.apellidos }}</a></h3>
         <p>{{ c.get_resumen }}</p>
     </div>
+    {% if forloop.counter|divisibleby:3 or foorloop.last %}
+    </div>
+    {% endif %}
     {% empty %}
     <div class="col-lg-4 col-sm-6 text-center">
         <p>No hay todav&iacute;a ninguna candidatura presentada.</p>
     </div>
-    {% if forloop.counter|divisibleby:3 or foorloop.last %}
-    </div>
-    {% endif %}
     {% endfor %}
 </div>
 
@@ -47,13 +47,13 @@
         <h3><a href="{% url "candidato" c.id %}">{{ c.nombre }} {{ c.apellidos }}</a></h3>
         <p>{{ c.get_resumen }}</p>
     </div>
+    {% if forloop.counter|divisibleby:3 or foorloop.last %}
+    </div>
+    {% endif %}
     {% empty %}
     <div class="col-lg-4 col-sm-6 text-center">
         <p>No hay todav&iacute;a ninguna candidatura presentada.</p>
     </div>
-    {% if forloop.counter|divisibleby:3 or foorloop.last %}
-    </div>
-    {% endif %}
     {% endfor %}
 </div>
 {% endblock %}
