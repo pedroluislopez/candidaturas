@@ -11,10 +11,10 @@
         <small>{{ c.get_candidatura }}</small>
     </h1>
     <h3>Biograf&iacute;a</h3>
-    <p>{{ c.biografia }}</p>
+    <p>{{ c.biografia|linebreaks }}</p>
     <p>&nbsp;</p>
     <h3>Motivaci&oacute;n</h3>
-    <p>{{ c.motivacion }}</p>
+    <p>{{ c.motivacion|linebreaks }}</p>
     {% if c.youtube %}
     <p>&nbsp;</p>
     <h3>V&iacute;deo</h3>
