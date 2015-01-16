@@ -16,6 +16,9 @@
         <h2 class="page-header">Secretar&iacute;a General</h2>
     </div>
     {% for c in candidatos_sg %}
+    {% if forloop.counter0|divisibleby:3 %}
+    <div class="row">
+    {% endif %}
     <div class="col-lg-4 col-sm-6 text-center">
         <img class="img-circle img-responsive img-center" src="{{ c.get_imagen }}" alt="">
         <h3><a href="{% url "candidato" c.id %}">{{ c.nombre }} {{ c.apellidos }}</a></h3>
@@ -25,6 +28,9 @@
     <div class="col-lg-4 col-sm-6 text-center">
         <p>No hay todav&iacute;a ninguna candidatura presentada.</p>
     </div>
+    {% if forloop.counter|divisibleby:3 or foorloop.last %}
+    </div>
+    {% endif %}
     {% endfor %}
 </div>
 
@@ -33,6 +39,9 @@
         <h2 class="page-header">Consejo Ciudadano</h2>
     </div>
     {% for c in candidatos_cc %}
+    {% if forloop.counter0|divisibleby:3 %}
+    <div class="row">
+    {% endif %}
     <div class="col-lg-4 col-sm-6 text-center">
         <img class="img-circle img-responsive img-center" src="{{ c.get_imagen }}" alt="">
         <h3><a href="{% url "candidato" c.id %}">{{ c.nombre }} {{ c.apellidos }}</a></h3>
@@ -42,6 +51,9 @@
     <div class="col-lg-4 col-sm-6 text-center">
         <p>No hay todav&iacute;a ninguna candidatura presentada.</p>
     </div>
+    {% if forloop.counter|divisibleby:3 or foorloop.last %}
+    </div>
+    {% endif %}
     {% endfor %}
 </div>
 {% endblock %}
